@@ -13,6 +13,13 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class ImageEditor extends ApplicationAdapter {
 	SpriteBatch batch;
 	Rec2D rectangle;
+	static int Height = 480;
+	static int Width = 584;
+
+	public ImageEditor(int width, int height) {
+		Width = width;
+		Height = height;
+	}
 
 	@Override
 	public void dispose() {
@@ -22,7 +29,11 @@ public class ImageEditor extends ApplicationAdapter {
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
-		rectangle = new Rec2D(new Vector2(200, 100), new Vector2(200, 200), new Vector2(5, 3), Color.RED);
+		InputManager inputManager = new InputManager();
+		Gdx.input.setInputProcessor(inputManager);
+		rectangle = new Rec2D(
+				new Vector2(Width / 2 - 100, Height / 2 - 100),
+				new Vector2(200, 200), Color.RED);
 	}
 
 	@Override
@@ -30,17 +41,6 @@ public class ImageEditor extends ApplicationAdapter {
 		ScreenUtils.clear(0f, 0f, 0f, 1);
 		batch.begin();
 		batch.draw(rectangle.RecTexture, rectangle.Position.x, rectangle.Position.y);
-		if (rectangle.Position.x + rectangle.Scale.x >= 584 || rectangle.Position.x <= 0) {
-			rectangle.Velocity.x *= -1;
-			Random random = new Random();
-			rectangle.changeColor(new Color(random.nextFloat(), random.nextFloat(), random.nextFloat(), 1));
-		}
-		if (rectangle.Position.y + rectangle.Scale.y >= 480 || rectangle.Position.y <= 0) {
-			rectangle.Velocity.y *= -1;
-			Random random = new Random();
-			rectangle.changeColor(new Color(random.nextFloat(), random.nextFloat(), random.nextFloat(), 1));
-		}
-		rectangle.Position.add(rectangle.Velocity);
 		batch.end();
 	}
 }

@@ -15,7 +15,9 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("ImageEditor");
-		config.setWindowedMode(584, 480);
-		new Lwjgl3Application(new ImageEditor(), config);
+		int height = 480;
+		int width = 584;
+		config.setWindowedMode(width, height);
+		new Lwjgl3Application(new ImageEditor(width, height), config);
 	}
 }
