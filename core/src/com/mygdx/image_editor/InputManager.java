@@ -1,8 +1,18 @@
 package com.mygdx.image_editor;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 
 public class InputManager implements InputProcessor {
+	public static InputManager Instance;
+
+	public Array<Button> Buttons = new Array<Button>();
+
+	public InputManager() {
+		Instance = this;
+	}
 
 	@Override
 	public boolean keyDown(int keycode) {
@@ -25,7 +35,12 @@ public class InputManager implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		// TODO Auto-generated method stub
-		System.out.println("mouse clicked");
+		Button collision = CollisionManager.Instance
+				.getCollision(convertToWorldCoordinates(
+						new Vector2(screenX, screenY)));
+		if (collision != null) {
+			collision.onPressed();
+		}
 		return true;
 	}
 
@@ -59,4 +74,11 @@ public class InputManager implements InputProcessor {
 		return false;
 	}
 
+	private Vector2 convertToWorldCoordinates(Vector2 screenCoordinates) {
+		return new Vector2(
+				(screenCoordinates.x * ImageEditor.Instance.ScreenSize.x) / Gdx.graphics.getWidth(),
+				ImageEditor.Instance.ScreenSize.y
+						- ((screenCoordinates.y) * ImageEditor.Instance.ScreenSize.y)
+								/ Gdx.graphics.getHeight());
+	}
 }

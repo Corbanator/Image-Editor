@@ -11,14 +11,18 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class ImageEditor extends ApplicationAdapter {
+	public static ImageEditor Instance;
 	SpriteBatch batch;
-	Rec2D rectangle;
-	static int Height = 480;
-	static int Width = 584;
+	Button button1;
+	Button button2;
+	Button button3;
+	Button button4;
+	Button button5;
+	public Vector2 ScreenSize;
 
 	public ImageEditor(int width, int height) {
-		Width = width;
-		Height = height;
+		ScreenSize = new Vector2(width, height);
+		Instance = this;
 	}
 
 	@Override
@@ -29,18 +33,49 @@ public class ImageEditor extends ApplicationAdapter {
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
+
+		CollisionManager collisionManger = new CollisionManager();
 		InputManager inputManager = new InputManager();
 		Gdx.input.setInputProcessor(inputManager);
-		rectangle = new Rec2D(
-				new Vector2(Width / 2 - 100, Height / 2 - 100),
-				new Vector2(200, 200), Color.RED);
+
+		Vector2 buttonScale = new Vector2(100, 100);
+		Vector2 offset = new Vector2(150, 150);
+		button1 = new Button(
+				new Vector2(ScreenSize.x / 2f - buttonScale.x / 2f + offset.x,
+						ScreenSize.y / 2f - buttonScale.y / 2f + offset.y),
+				buttonScale,
+				Color.BLUE);
+		button2 = new Button(
+				new Vector2(ScreenSize.x / 2f - buttonScale.x / 2f - offset.x,
+						ScreenSize.y / 2f - buttonScale.y / 2f + offset.y),
+				buttonScale,
+				Color.RED);
+		button3 = new Button(
+				new Vector2(ScreenSize.x / 2f - buttonScale.x / 2f + offset.x,
+						ScreenSize.y / 2f - buttonScale.y / 2f - offset.y),
+				buttonScale,
+				Color.GREEN);
+		button4 = new Button(
+				new Vector2(ScreenSize.x / 2f - buttonScale.x / 2f - offset.x,
+						ScreenSize.y / 2f - buttonScale.y / 2f - offset.y),
+				buttonScale,
+				Color.ORANGE);
+		button5 = new Button(
+				new Vector2(ScreenSize.x / 2f - buttonScale.x / 2f,
+						ScreenSize.y / 2f - buttonScale.y / 2f),
+				buttonScale,
+				Color.WHITE);
 	}
 
 	@Override
 	public void render() {
 		ScreenUtils.clear(0f, 0f, 0f, 1);
 		batch.begin();
-		batch.draw(rectangle.RecTexture, rectangle.Position.x, rectangle.Position.y);
+		batch.draw(button1.RecTexture, button1.Position.x, button1.Position.y);
+		batch.draw(button2.RecTexture, button2.Position.x, button2.Position.y);
+		batch.draw(button3.RecTexture, button3.Position.x, button3.Position.y);
+		batch.draw(button4.RecTexture, button4.Position.x, button4.Position.y);
+		batch.draw(button5.RecTexture, button5.Position.x, button5.Position.y);
 		batch.end();
 	}
 }
