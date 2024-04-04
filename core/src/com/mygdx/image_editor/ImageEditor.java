@@ -8,16 +8,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class ImageEditor extends ApplicationAdapter {
 	public static ImageEditor Instance;
 	SpriteBatch batch;
-	Button button1;
-	Button button2;
-	Button button3;
-	Button button4;
-	Button button5;
+	public Array<Rec2D> Rectangles = new Array<Rec2D>();
 	public Vector2 ScreenSize;
 
 	public ImageEditor(int width, int height) {
@@ -40,27 +37,27 @@ public class ImageEditor extends ApplicationAdapter {
 
 		Vector2 buttonScale = new Vector2(100, 100);
 		Vector2 offset = new Vector2(150, 150);
-		button1 = new Button(
+		new Button(
 				new Vector2(ScreenSize.x / 2f - buttonScale.x / 2f + offset.x,
 						ScreenSize.y / 2f - buttonScale.y / 2f + offset.y),
 				buttonScale,
 				Color.BLUE);
-		button2 = new Button(
+		new Button(
 				new Vector2(ScreenSize.x / 2f - buttonScale.x / 2f - offset.x,
 						ScreenSize.y / 2f - buttonScale.y / 2f + offset.y),
 				buttonScale,
 				Color.RED);
-		button3 = new Button(
+		new Button(
 				new Vector2(ScreenSize.x / 2f - buttonScale.x / 2f + offset.x,
 						ScreenSize.y / 2f - buttonScale.y / 2f - offset.y),
 				buttonScale,
 				Color.GREEN);
-		button4 = new Button(
+		new Button(
 				new Vector2(ScreenSize.x / 2f - buttonScale.x / 2f - offset.x,
 						ScreenSize.y / 2f - buttonScale.y / 2f - offset.y),
 				buttonScale,
 				Color.ORANGE);
-		button5 = new Button(
+		new Button(
 				new Vector2(ScreenSize.x / 2f - buttonScale.x / 2f,
 						ScreenSize.y / 2f - buttonScale.y / 2f),
 				buttonScale,
@@ -71,11 +68,10 @@ public class ImageEditor extends ApplicationAdapter {
 	public void render() {
 		ScreenUtils.clear(0f, 0f, 0f, 1);
 		batch.begin();
-		batch.draw(button1.RecTexture, button1.Position.x, button1.Position.y);
-		batch.draw(button2.RecTexture, button2.Position.x, button2.Position.y);
-		batch.draw(button3.RecTexture, button3.Position.x, button3.Position.y);
-		batch.draw(button4.RecTexture, button4.Position.x, button4.Position.y);
-		batch.draw(button5.RecTexture, button5.Position.x, button5.Position.y);
+		for (Rec2D Rectangle : Rectangles) {
+			batch.draw(Rectangle.RecTexture, Rectangle.Position.x, Rectangle.Position.y, Rectangle.Scale.x,
+					Rectangle.Scale.y);
+		}
 		batch.end();
 	}
 }

@@ -34,20 +34,23 @@ public class InputManager implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		Button collision = CollisionManager.Instance
+		Array<Button> collisions = CollisionManager.Instance
 				.getCollision(convertToWorldCoordinates(
 						new Vector2(screenX, screenY)));
-		if (collision != null) {
-			collision.onPressed();
+		for (Button collision : collisions) {
+			collision.onClickDown();
 		}
 		return true;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
+		for (Button Button : Buttons) {
+			if (Button.Clicked) {
+				Button.onClickUp();
+			}
+		}
+		return true;
 	}
 
 	@Override
@@ -58,14 +61,27 @@ public class InputManager implements InputProcessor {
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
-		return false;
+		return mouseMoved(screenX, screenY);
 	}
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
-		return false;
+		Array<Button> collisions = CollisionManager.Instance
+				.getCollision(convertToWorldCoordinates(
+						new Vector2(screenX, screenY)));
+		for (Button collision : collisions) {
+			if (!collision.Hovered) {
+				collision.onHovered();
+			}
+		}
+		for (Button button : Buttons) {
+			if (!collisions.contains(button, true)) {
+				if (button.Hovered) {
+					button.onHoverExit();
+				}
+			}
+		}
+		return true;
 	}
 
 	@Override
