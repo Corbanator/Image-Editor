@@ -16,6 +16,7 @@ public class ImageEditor extends ApplicationAdapter {
 	SpriteBatch batch;
 	public Array<Rec2D> Rectangles = new Array<Rec2D>();
 	public Vector2 ScreenSize;
+	EditWindow editWindow;
 
 	public ImageEditor(int width, int height) {
 		ScreenSize = new Vector2(width, height);
@@ -35,33 +36,11 @@ public class ImageEditor extends ApplicationAdapter {
 		InputManager inputManager = new InputManager();
 		Gdx.input.setInputProcessor(inputManager);
 
-		Vector2 buttonScale = new Vector2(100, 100);
-		Vector2 offset = new Vector2(150, 150);
-		new Button(
-				new Vector2(ScreenSize.x / 2f - buttonScale.x / 2f + offset.x,
-						ScreenSize.y / 2f - buttonScale.y / 2f + offset.y),
-				buttonScale,
-				Color.BLUE);
-		new Button(
-				new Vector2(ScreenSize.x / 2f - buttonScale.x / 2f - offset.x,
-						ScreenSize.y / 2f - buttonScale.y / 2f + offset.y),
-				buttonScale,
-				Color.RED);
-		new Button(
-				new Vector2(ScreenSize.x / 2f - buttonScale.x / 2f + offset.x,
-						ScreenSize.y / 2f - buttonScale.y / 2f - offset.y),
-				buttonScale,
-				Color.GREEN);
-		new Button(
-				new Vector2(ScreenSize.x / 2f - buttonScale.x / 2f - offset.x,
-						ScreenSize.y / 2f - buttonScale.y / 2f - offset.y),
-				buttonScale,
-				Color.ORANGE);
-		new Button(
-				new Vector2(ScreenSize.x / 2f - buttonScale.x / 2f,
-						ScreenSize.y / 2f - buttonScale.y / 2f),
-				buttonScale,
-				Color.WHITE);
+		Vector2 editWindowSize = new Vector2(500, ScreenSize.y - 40);
+		editWindow = new EditWindow(
+				new Vector2(ScreenSize.x - editWindowSize.x, 0), editWindowSize, Color.GRAY);
+		Vector2 buttonSize = new Vector2(50, 50);
+		Button button = new Button(new Vector2(0, 0), buttonSize, Color.GREEN);
 	}
 
 	@Override
@@ -72,6 +51,9 @@ public class ImageEditor extends ApplicationAdapter {
 			batch.draw(Rectangle.RecTexture, Rectangle.Position.x, Rectangle.Position.y, Rectangle.Scale.x,
 					Rectangle.Scale.y);
 		}
+		batch.draw(editWindow.DoodleTexture, editWindow.Position.x, editWindow.Position.y, editWindow.Scale.x,
+				editWindow.Scale.y);
 		batch.end();
+
 	}
 }

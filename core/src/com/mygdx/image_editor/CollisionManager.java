@@ -11,14 +11,27 @@ public class CollisionManager {
 		Instance = this;
 	}
 
-	public Array<Button> getCollision(Vector2 coordinates) {
-		Array<Button> Collisions = new Array<Button>();
-		for (Button button : InputManager.Instance.Buttons) {
-			if (coordinates.x >= button.Position.x &&
-					coordinates.x <= button.Position.x + button.Scale.x &&
-					coordinates.y >= button.Position.y &&
-					coordinates.y <= button.Position.y + button.Scale.y) {
-				Collisions.add(button);
+	public Array<IClickable> getClicked(Vector2 coordinates) {
+		Array<IClickable> Collisions = new Array<IClickable>();
+		for (IClickable clickable : InputManager.Instance.Clickables) {
+			if (coordinates.x >= ((Rec2D) clickable).Position.x &&
+					coordinates.x <= ((Rec2D) clickable).Position.x + ((Rec2D) clickable).Scale.x &&
+					coordinates.y >= ((Rec2D) clickable).Position.y &&
+					coordinates.y <= ((Rec2D) clickable).Position.y + ((Rec2D) clickable).Scale.y) {
+				Collisions.add(clickable);
+			}
+		}
+		return Collisions;
+	}
+
+	public Array<IHoverable> getHovered(Vector2 coordinates) {
+		Array<IHoverable> Collisions = new Array<IHoverable>();
+		for (IHoverable hoverable : InputManager.Instance.Hoverables) {
+			if (coordinates.x >= ((Rec2D) hoverable).Position.x &&
+					coordinates.x <= ((Rec2D) hoverable).Position.x + ((Rec2D) hoverable).Scale.x &&
+					coordinates.y >= ((Rec2D) hoverable).Position.y &&
+					coordinates.y <= ((Rec2D) hoverable).Position.y + ((Rec2D) hoverable).Scale.y) {
+				Collisions.add(hoverable);
 			}
 		}
 		return Collisions;

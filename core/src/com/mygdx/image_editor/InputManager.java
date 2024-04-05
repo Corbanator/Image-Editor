@@ -8,7 +8,8 @@ import com.badlogic.gdx.utils.Array;
 public class InputManager implements InputProcessor {
 	public static InputManager Instance;
 
-	public Array<Button> Buttons = new Array<Button>();
+	public Array<IClickable> Clickables = new Array<IClickable>();
+	public Array<IHoverable> Hoverables = new Array<IHoverable>();
 
 	public InputManager() {
 		Instance = this;
@@ -34,20 +35,20 @@ public class InputManager implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		Array<Button> collisions = CollisionManager.Instance
-				.getCollision(convertToWorldCoordinates(
+		Array<IClickable> collisions = CollisionManager.Instance
+				.getClicked(convertToWorldCoordinates(
 						new Vector2(screenX, screenY)));
-		for (Button collision : collisions) {
-			collision.onClickDown();
+		for (IClickable collision : collisions) {
+			collision.onClickDown(convertToWorldCoordinates(new Vector2(screenX, screenY)));
 		}
 		return true;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		for (Button Button : Buttons) {
-			if (Button.Clicked) {
-				Button.onClickUp();
+		for (IClickable clickable : Clickables) {
+			if (clickable.isClicked()) {
+				clickable.onClickUp(convertToWorldCoordinates(new Vector2(screenX, screenY)));
 			}
 		}
 		return true;
@@ -61,23 +62,28 @@ public class InputManager implements InputProcessor {
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		for (IClickable clickable : Clickables) {
+			if (clickable.isClicked()) {
+				clickable.onClickDragged(convertToWorldCoordinates(new Vector2(screenX, screenY)));
+			}
+		}
 		return mouseMoved(screenX, screenY);
 	}
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		Array<Button> collisions = CollisionManager.Instance
-				.getCollision(convertToWorldCoordinates(
+		Array<IHoverable> collisions = CollisionManager.Instance
+				.getHovered(convertToWorldCoordinates(
 						new Vector2(screenX, screenY)));
-		for (Button collision : collisions) {
-			if (!collision.Hovered) {
+		for (IHoverable collision : collisions) {
+			if (!collision.isHovered()) {
 				collision.onHovered();
 			}
 		}
-		for (Button button : Buttons) {
-			if (!collisions.contains(button, true)) {
-				if (button.Hovered) {
-					button.onHoverExit();
+		for (IHoverable hoverable : Hoverables) {
+			if (!collisions.contains(hoverable, true)) {
+				if (hoverable.isHovered()) {
+					hoverable.onHoverExit();
 				}
 			}
 		}
