@@ -8,18 +8,20 @@ import com.badlogic.gdx.math.Vector2;
 
 public class EditWindow extends Rec2D implements IClickable {
 	public Texture DoodleTexture;
-	private Pixmap _doodleMap;
+	public static EditWindow Instance;
+	public Pixmap DoodleMap;
 
 	public boolean Clicked;
 	private Vector2 _previousPaintPosition;
 	private int drawradius;
 
-	public EditWindow(Vector2 position, Vector2 scale, Color backgroundColor) {
-		super(position, scale, backgroundColor);
+	public EditWindow(Vector2 position, Vector2 scale) {
+		super(position, scale, Color.GRAY);
+		Instance = this;
 		InputManager.Instance.Clickables.add(this);
-		_doodleMap = new Pixmap((int) scale.x, (int) scale.y, Format.RGBA8888);
-		_doodleMap.setColor(Color.ORANGE);
-		DoodleTexture = new Texture(_doodleMap);
+		DoodleMap = new Pixmap((int) scale.x, (int) scale.y, Format.RGBA8888);
+		DoodleMap.setColor(Color.ORANGE);
+		DoodleTexture = new Texture(DoodleMap);
 		drawradius = 1;
 	}
 
@@ -33,15 +35,15 @@ public class EditWindow extends Rec2D implements IClickable {
 		Vector2 oldPixmapPosition = convertToPixmapCoordinates(oldWorldPosition);
 		for (int i = -(drawradius); i <= drawradius; i++) {
 			for (int j = -(drawradius); j <= drawradius; j++) {
-				_doodleMap.drawLine((int) (oldPixmapPosition.x + i), (int) (oldPixmapPosition.y + j),
+				DoodleMap.drawLine((int) (oldPixmapPosition.x + i), (int) (oldPixmapPosition.y + j),
 						(int) (pixmapPosition.x + i),
 						(int) (pixmapPosition.y + j));
 			}
 		}
-		_doodleMap.drawLine((int) (oldPixmapPosition.x), (int) (oldPixmapPosition.y),
+		DoodleMap.drawLine((int) (oldPixmapPosition.x), (int) (oldPixmapPosition.y),
 				(int) (pixmapPosition.x),
 				(int) (pixmapPosition.y));
-		DoodleTexture = new Texture(_doodleMap);
+		DoodleTexture = new Texture(DoodleMap);
 	}
 
 	public void onClickDragged(Vector2 position) {

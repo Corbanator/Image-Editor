@@ -2,6 +2,7 @@ package com.mygdx.image_editor;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3WindowAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -18,6 +19,12 @@ public class DesktopLauncher {
 		int height = 480;
 		int width = 584;
 		config.setWindowedMode(width, height);
-		new Lwjgl3Application(new ImageEditor(width, height), config);
+		ImageEditor editor = new ImageEditor(width, height);
+		config.setWindowListener(new Lwjgl3WindowAdapter() {
+			public void filesDropped(String[] files) {
+				editor.filesImported(files);
+			}
+		});
+		new Lwjgl3Application(editor, config);
 	}
 }

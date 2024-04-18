@@ -1,12 +1,17 @@
 package com.mygdx.image_editor;
 
+import java.io.IOException;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 public class InputManager implements InputProcessor {
 	public static InputManager Instance;
+
+	private boolean _controlPressed;
 
 	public Array<IClickable> Clickables = new Array<IClickable>();
 	public Array<IHoverable> Hoverables = new Array<IHoverable>();
@@ -17,13 +22,23 @@ public class InputManager implements InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		// TODO Auto-generated method stub
-		return false;
+		if (_controlPressed && keycode == Keys.S)
+			if (_controlPressed && keycode == Keys.S)
+				try {
+					ImageInputOutput.Instance.saveImage("test.bmp");
+					System.out.println("saved.");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		if (keycode == Keys.CONTROL_LEFT)
+			_controlPressed = true;
+		return true;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
+		if (keycode == Keys.CONTROL_LEFT)
+			_controlPressed = false;
 		return false;
 	}
 
