@@ -46,7 +46,6 @@ public class Util {
 		Pixmap newMap = new Pixmap((int) desiredSize.x, (int) desiredSize.y, Pixmap.Format.RGBA8888);
 		int width = map.getWidth();
 		int height = map.getHeight();
-		System.out.println("width is " + (int) desiredSize.x + " and height is " + (int) desiredSize.y);
 		for (int x = 0; x < newMap.getWidth(); x++) {
 			for (int y = 0; y < newMap.getHeight(); y++) {
 				int sourceX = x * width / (int) desiredSize.x;

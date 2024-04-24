@@ -22,10 +22,14 @@ public class InputManager implements InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
+		if (ImageInputOutput.Instance.ImageFolderLocation == null) {
+			return false;
+		}
 		if (_controlPressed && keycode == Keys.S)
 			if (_controlPressed && keycode == Keys.S)
 				try {
-					ImageInputOutput.Instance.saveImage("test.bmp");
+					ImageInputOutput.Instance.saveImage(
+							ImageInputOutput.Instance.ImageFolderLocation + "/output.bmp");
 					System.out.println("saved.");
 				} catch (IOException e) {
 					e.printStackTrace();

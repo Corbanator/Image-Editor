@@ -35,7 +35,9 @@ public class Button extends Rec2D implements IClickable, IHoverable {
 
 	public void onHovered() {
 		Hovered = true;
-		_recColor = new Color(_startColor.cpy().mul(0.75f));
+		if (!Clicked) {
+			_recColor = new Color(_startColor.cpy().mul(0.75f));
+		}
 		generateTexture();
 	}
 

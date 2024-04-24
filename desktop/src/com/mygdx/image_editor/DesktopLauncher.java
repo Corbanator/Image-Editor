@@ -19,6 +19,7 @@ public class DesktopLauncher {
 		int height = 480;
 		int width = 584;
 		config.setWindowedMode(width, height);
+		config.setResizable(false);
 		ImageEditor editor = new ImageEditor(width, height);
 		config.setWindowListener(new Lwjgl3WindowAdapter() {
 			public void filesDropped(String[] files) {

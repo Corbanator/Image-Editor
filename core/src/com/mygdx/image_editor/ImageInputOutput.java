@@ -14,6 +14,7 @@ public class ImageInputOutput {
 
 	private byte[] _fileHeader;
 	private Pixmap _pixels;
+	public String ImageFolderLocation;
 
 	public ImageInputOutput() {
 		Instance = this;
@@ -110,5 +111,15 @@ public class ImageInputOutput {
 		output.write(colorData);
 
 		output.close();
+	}
+
+	private String scrapeFolderLocation(String filePath) {
+		StringBuilder builder = new StringBuilder(filePath);
+		for (int i = filePath.length() - 1; i >= 0; i--) {
+			if (filePath.charAt(i) != '/')
+				continue;
+			return builder.substring(0, i);
+		}
+		return null;
 	}
 }
