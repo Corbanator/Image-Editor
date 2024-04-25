@@ -21,6 +21,7 @@ public class ImageInputOutput {
 	}
 
 	public Pixmap loadImage(String filePath) {
+		ImageFolderLocation = scrapeFolderLocation(filePath);
 		byte[] bytes = Gdx.files.internal(filePath).readBytes();
 		int[] ints = Util.unsignBytes(bytes);
 

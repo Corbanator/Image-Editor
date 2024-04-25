@@ -10,6 +10,7 @@ public class EditWindow extends Rec2D implements IClickable {
 	public Texture DoodleTexture;
 	public static EditWindow Instance;
 	public Pixmap DoodleMap;
+	public Color DrawColor;
 
 	public boolean Clicked;
 	private Vector2 _previousPaintPosition;
@@ -20,7 +21,8 @@ public class EditWindow extends Rec2D implements IClickable {
 		Instance = this;
 		InputManager.Instance.Clickables.add(this);
 		DoodleMap = new Pixmap((int) scale.x, (int) scale.y, Format.RGBA8888);
-		DoodleMap.setColor(Color.ORANGE);
+		DrawColor = Color.BLACK;
+		DoodleMap.setColor(DrawColor);
 		DoodleTexture = new Texture(DoodleMap);
 		drawradius = 1;
 	}

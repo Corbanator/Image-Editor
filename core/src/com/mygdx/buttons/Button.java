@@ -1,11 +1,16 @@
-package com.mygdx.image_editor;
+package com.mygdx.buttons;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.image_editor.IClickable;
+import com.mygdx.image_editor.IHoverable;
+import com.mygdx.image_editor.InputManager;
+import com.mygdx.image_editor.Rec2D;
 
 public class Button extends Rec2D implements IClickable, IHoverable {
 
-	private Color _startColor;
+	protected Color _startColor;
+	public String ButtonText;
 
 	public boolean Hovered;
 	public boolean Clicked;

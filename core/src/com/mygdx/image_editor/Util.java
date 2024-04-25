@@ -1,5 +1,7 @@
 package com.mygdx.image_editor;
 
+import java.io.IOException;
+
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.math.Vector2;
 
@@ -55,5 +57,17 @@ public class Util {
 			}
 		}
 		return newMap;
+	}
+
+	public static void save() {
+		System.out.println(ImageInputOutput.Instance.ImageFolderLocation);
+		if (ImageInputOutput.Instance.ImageFolderLocation == null)
+			return;
+		try {
+			ImageInputOutput.Instance
+					.saveImage(ImageInputOutput.Instance.ImageFolderLocation + "/output.bmp");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

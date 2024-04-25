@@ -26,14 +26,7 @@ public class InputManager implements InputProcessor {
 			return false;
 		}
 		if (_controlPressed && keycode == Keys.S)
-			if (_controlPressed && keycode == Keys.S)
-				try {
-					ImageInputOutput.Instance.saveImage(
-							ImageInputOutput.Instance.ImageFolderLocation + "/output.bmp");
-					System.out.println("saved.");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+			Util.save();
 		if (keycode == Keys.CONTROL_LEFT)
 			_controlPressed = true;
 		return true;

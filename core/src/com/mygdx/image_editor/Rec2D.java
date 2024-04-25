@@ -12,11 +12,13 @@ public class Rec2D {
 	public Texture RecTexture;
 	private Pixmap _pixelMap;
 	protected Color _recColor;
+	public Outline Outline;
 
 	public Rec2D(Vector2 position, Vector2 scale, Color color) {
 		Scale = scale;
 		Position = position;
 		_recColor = color;
+		Outline = new Outline(scale, Color.BLACK, 3);
 
 		generateTexture();
 		ImageEditor.Instance.Rectangles.add(this);
